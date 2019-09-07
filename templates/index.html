@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+
+<!-- Mirrored from iqonicthemes.com/themes/vizion/digital-marketing/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Sep 2019 10:14:28 GMT -->
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Home - SRM Brain</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/magnific-popup.css') }}" />
+    <!-- Typography CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/typography.css') }}">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+  </head>
+  <body>
+    <!-- loading -->
+    <div id="loading">
+      <div id="loading-center">
+        <img src="{{ url_for('static', filename='images/loader.gif') }}" alt="loder">
+      </div>
+    </div>
+    <!-- loading End -->
+    <!-- Header-->
+    <header>
+      <div class="container-fluid sub-header">
+        <div class="row">
+          <div class="col-auto mr-auto">
+            <div class="btn-group">
+            </div>
+          </div>
+          <div class="col-auto sub-main">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/login">Login</a></li>
+                <li class="breadcrumb-item" aria-current="page"><a href="/register">Register</a></li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid main-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid logo" alt="img" style="width: 40%; height: 30%;">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid logo-white" alt="img" style="width: 30%; height: 20%;">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              {{ navbar }}
+            </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Header-->
+    <!-- Banner-->
+    <div class="banner">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="banner-text">
+              <h5 class="main-color mb-3">A repository of pre-trained AI models</h5>
+              <h1 class="font-weight-bold  mb-3">SRM BRAIN</h1>
+              <p class=" mb-4">Get deplyoment ready pre-trained models with custom APIs. We do the intensive training so that you don't have to. </p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="banner-type wow fadeInRight">
+              <img class="img-fluid banner-person" src="{{ url_for('static', filename='images/banner/03.png') }}" alt="img">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Banner-->
+    <!--=================================
+    MAIN CONTENT -->
+    <div class="main-content">
+      <!-- How It Works-->
+      <section class="how-it-works conection-shap">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4 col-md-4">
+              <div class="future-services text-center wow slideInUp" data-wow-duration="0.5s">
+                <div class="future-img">
+                  <img src="{{ url_for('static', filename='images/feature/01.png') }}" class="img-fluid mb-4" alt="">
+                </div>
+                <h4 class="mb-3">Pre-trained models</h4>
+                <p class="mb-0">Pre trained AI models</p>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+              <div class="future-services text-center wow slideInUp" data-wow-duration="1s">
+                <div class="future-img">
+                  <img src="{{ url_for('static', filename='images/feature/02.png') }}" class="img-fluid mb-4" alt="">
+                </div>
+                <h4 class="mb-3">Ready-to-ship APIs</h4>
+                <p class="mb-0">Customized APIs built for pre-trained models</p>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+              <div class="future-services text-center wow slideInUp" data-wow-duration="1.5s">
+                <div class="future-img">
+                  <img src="{{ url_for('static', filename='images/feature/03.png') }}" class="img-fluid mb-4" alt="">
+                </div>
+                <h4 class="mb-3">Parent Network</h4>
+                <p class="mb-0">A parent network to search for appropriate child models for prediction.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Easy Pricing Plans-->
+      <!-- <section class="main-bg counter">
+        <div class="container">
+          <div class="row iq-counter3 text-center">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+              <div class="iq-counter iq-pt-30 iq-rmb-30">
+                <span class="timer text-white" data-to="575" data-speed="5000">575</span>
+                <h6 class="mt-3 text-white">Increase in Leads</h6>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+              <div class="iq-counter iq-pt-30 iq-rmb-30">
+                <span class="timer text-white" data-to="1540" data-speed="5000">1540</span>
+                <h6 class="mt-3 text-white">Lift in ROI</h6>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+              <div class="iq-counter iq-pt-30 iq-rmb-30">
+                <span class="timer text-white" data-to="110" data-speed="5000">110</span>
+                <h6 class="mt-3 text-white">Increase in Conversions</h6>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+              <div class="iq-counter iq-pt-30">
+                <span class="timer text-white" data-to="90" data-speed="5000">110</span>
+                <h6 class="mt-3 text-white">Decrease in ECPA</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> -->
+      <!--=================================
+      Clients -->
+      <!-- <section class="iq-clients pt-0">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="title-box">
+                <h2 class="title font-weight-bold">They Trust Me</h2>
+                <p class="sub-title">Simply dummy has been the industry's standard dummy text.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="owl-carousel" data-autoplay="true" data-loop="true" data-nav="false" data-dots="true" data-items="6" data-items-laptop="5" data-items-tab="3" data-items-mobile="2" data-items-mobile-sm="1">
+                <div class="item">
+                  <div class="clients-box">
+                    <img class="img-fluid client-img" src="{{ url_for('static', filename='images/clients/clients-img1.png') }}" alt="image" data-toggle="tooltip" title="HTML">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="clients-box">
+                    <img class="img-fluid client-img" src="{{ url_for('static', filename='images/clients/clients-img2.png') }}" alt="image" data-toggle="tooltip" title="Wordpress">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="clients-box">
+                    <img class="img-fluid client-img" src="{{ url_for('static', filename='images/clients/clients-img3.png') }}" alt="image" data-toggle="tooltip" title="Shopify">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="clients-box">
+                    <img class="img-fluid client-img" src="{{ url_for('static', filename='images/clients/clients-img4.png') }}" alt="image" data-toggle="tooltip" title="CSS">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="clients-box">
+                    <img class="img-fluid client-img" src="{{ url_for('static', filename='images/clients/clients-img5.png') }}" alt="image" data-toggle="tooltip" title="jQuery">
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="clients-box">
+                    <img class="img-fluid client-img" src="{{ url_for('static', filename='images/clients/clients-img6.png') }}" alt="image" data-toggle="tooltip" title="Bootstrap">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> -->
+    </div>
+    <!--=================================
+    MAIN CONTENT -->
+    <!--=================================
+    Clients -->
+    <!-- Footer start-->
+    <footer id="contact" class="main-bg pt-5 pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-auto mr-auto">
+            <div class="footer-logo">
+              <a href="index-2.html"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="img" style="width: 30%; height: 20%;"></a>
+            </div>
+          </div>
+          <div class="col-auto right-footer">
+            <ul class="nav footer-menu">
+              <li class="nav-item">
+                <a class="nav-link " href="index-2.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about-us.html">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="services.html">Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr class="pt-5">
+        <div class="pt-3">
+          <div class="row justify-content-between">
+            <div class="col-auto mr-auto">
+              <h6 class="text-white iq-font-18"><span>Design <a href="https://iqonicthemes.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="80c2f9c0">[email&#160;protected]</a></span><a href="https://iqonicthemes.com/"> iqonictheme.com</a></h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- back-to-top -->
+      <div id="back-to-top">
+        <a class="top" id="top" href="#top"><span>Scroll Up</span> <i class="ion-ios-arrow-thin-up"></i></a>
+      </div>
+      <!-- back-to-top End -->
+      <!--=================================
+         Cookies -->
+      <div id="cookie_div" class="align-items-center"> We use cookies to give you tailored experiences on our website.
+          <a class="button grey text-right ml-3" href="#" role="button" id="cookie">Accept </a>
+      </div>
+       <!--=================================
+          Cookies -->
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first -->
+    <script data-cfasync="false" src="https://iqonicthemes.com/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    <!-- popper -->
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <!-- bootstrap -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- Owl Carousel -->
+    <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+    <!-- main -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!--custom -->
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <!--hit api -->
+    <script src="{{ url_for('static', filename='js/login-api.js') }}"></script>
+  </body>
+
+<!-- Mirrored from iqonicthemes.com/themes/vizion/digital-marketing/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Sep 2019 10:15:16 GMT -->
+</html>

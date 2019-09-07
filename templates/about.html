@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+
+<!-- Mirrored from iqonicthemes.com/themes/vizion/digital-marketing/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Sep 2019 10:15:32 GMT -->
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>About - SRM Brain</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/magnific-popup.css') }}" />
+    <!-- Typography CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/typography.css') }}">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+  </head>
+  <body>
+    <!-- loading -->
+    <div id="loading">
+      <div id="loading-center">
+        <img src="{{ url_for('static', filename='images/loader.gif') }}" alt="loder">
+      </div>
+    </div>
+    <!-- loading End -->
+    <!-- Header-->
+    <header>
+      <div >
+        <div class="container-fluid sub-header">
+          <div class="row">
+            <div class="col-auto mr-auto">
+              <div class="btn-group">
+              </div>
+            </div>
+            <div class="col-auto sub-main">
+              {{ logout }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid main-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid logo" alt="img" style="width: 40%; height: 30%;">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid logo-white" alt="img" style="width: 30%; height: 20%;">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              {{ navbar }}
+            </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Header-->
+    <!--=================================
+    MAIN CONTENT -->
+    <div class="main-content">
+      <!--================================
+      Login -->
+
+      <section class="iq-login-regi">
+        <div class="container">
+
+          <div class="row align-items">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <h3>{{ name }}<h3>
+              <br>
+              <img src="{{img}}" style="width: 50%;">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="iq-login">
+
+                <form class="iq-loginbox">
+                  <div class="login-boxes mb-3">
+                    <label for="name-input">Name</label>
+                    <input type="text" class="form-control email-bg" id="name-input" value="{{name}}">
+                  </div>
+                  <div class="login-boxes mb-3">
+                    <label for="email-input">Email Address</label>
+                    <input type="email" class="form-control email-bg" id="email-input" value="{{email}}">
+                  </div>
+                  <div class="login-boxes mb-3">
+                    <label for="register-input">Register Number</label>
+                    <input type="text" class="form-control email-bg" id="register-input" value="{{regno}}">
+                  </div>
+                  <div class="login-boxes mb-3">
+                    <label for="department-input">Department (To change contact admin)</label>
+                    <input type="text" class="form-control email-bg" id="department-input" value="{{department}}" disabled>
+                  </div>
+                  <div class="login-boxes mb-3">
+                    <label for="year-input">Year (To change contact admin)</label>
+                    <input type="text" class="form-control email-bg" id="year-input" value="{{year}}" disabled>
+                  </div>
+
+                  <button type="button" id="edit-details-button" class="button">Edit Details</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--================================
+      Login -->
+    </div>
+    <!--=================================
+    MAIN CONTENT  END-->
+    <!-- Footer start-->
+    <footer id="contact" class="main-bg pt-5 pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-auto mr-auto">
+            <div class="footer-logo">
+              <a href="index-2.html"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="img" style="width: 30%; height: 20%;"></a>
+            </div>
+          </div>
+          <div class="col-auto right-footer">
+            <ul class="nav justify-content-end footer-menu">
+              <li class="nav-item">
+                <a class="nav-link " href="index-2.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about-us.html">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="services.html">Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <hr class="pt-5">
+        <div class="pt-3">
+          <div class="row justify-content-between">
+            <div class="col-auto mr-auto">
+              <h6 class="text-white iq-font-18"><span>Design <a href="https://iqonicthemes.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a7e5dee7">[email&#160;protected]</a></span><a href="https://iqonicthemes.com/"> iqonictheme.com</a></h6>
+            </div>
+            <div class="col-auto">
+              <div class="social-icone">
+                <ul><li class="d-inline"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                <li class="d-inline"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                <li class="d-inline"><a href="#"><i class="fab fa-google"></i></a></li>
+                <li class="d-inline"><a href="#"><i class="fab fa-pinterest"></i></a></li></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- back-to-top -->
+      <div id="back-to-top">
+        <a class="top" id="top" href="#top"><span>Scroll Up</span> <i class="ion-ios-arrow-thin-up"></i></a>
+      </div>
+      <!-- back-to-top End -->
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first -->
+    <script data-cfasync="false" src="https://iqonicthemes.com/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    <!-- popper -->
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <!-- bootstrap -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- Owl Carousel -->
+    <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+    <!-- main -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!--custom -->
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <!--hit api -->
+    <script src="{{ url_for('static', filename='js/edit-details-api.js') }}"></script>
+  </body>
+
+<!-- Mirrored from iqonicthemes.com/themes/vizion/digital-marketing/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Sep 2019 10:15:32 GMT -->
+</html>
