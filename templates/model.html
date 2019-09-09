@@ -6,7 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Profile - SRM Brain</title>
+    <title>Add Model - SRM Brain</title>
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
     <!-- Bootstrap CSS -->
@@ -19,8 +19,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <!-- Responsive CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 
   </head>
   <body>
@@ -74,59 +72,17 @@
 
       <section class="iq-login-regi">
         <div class="container">
-
-          <div class="row align-items">
-            <div class="col-lg-6 col-md-6 col-sm-12">
-              <h3>{{ name }}<h3>
-              <br>
-              <img src="{{img}}" style="width: 50%;">
-              <br><br>
-              <button type="button"
-              onmouseover="style.color='white'; style.background='#5ac890';"
-              onmouseout="style.color='#5ac890'; style.background='white';"
-              onclick="location.href='/about';"
-              style="border: 2px solid #5ac890; border-radius: 20px; padding: 0 10px; font-size: 80%;">
-                About
-              </button>
-              <br><br>
-              <button type="button"
-              onmouseover="style.color='white'; style.background='#5ac890';"
-              onmouseout="style.color='#5ac890'; style.background='white';"
-              onclick="location.href='/contribution';"
-              style="border: 2px solid #5ac890; border-radius: 20px; padding: 0 10px; font-size: 80%;">
-                Contributions
-              </button>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
-              <h3>Today's contributions</h3>
-              {% if model|length == 0 %}
-                <br>
-                <p>No models to show!</p>
-              {% else %}
-                <br>
-                <table id="myTable">
-                  <thead>
-                    <tr>
-                      <th>S.No</th>
-                      <th>Model Name</th>
-                      <th>Submitted by</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% set i = 1 %}
-                    {% for d in model %}
-                      <tr>
-                        <td>{{i}}</td>
-                        <td><a href="/model?q={{d[0]}}">{{d[1]}}</a></td>
-                        <td>{{d[2]}}</td>
-                      </tr>
-                      {% set i = i + 1 %}
-                    {% endfor %}
-                  </tbody>
-                </table>
-              {% endif %}
-            </div>
-          </div>
+          <h3>{{name}}</h3>
+          <br>
+          <p><strong>Model Name: </strong>{{name}}</p>
+          <p><strong>Model Description: </strong>{{des}}</p>
+          {% if dataset != 'Not given!' %}
+            <p><strong>Dataset link: </strong><a href="{{dataset}}">{{dataset}}</a></p>
+          {% else %}
+            <p><strong>Dataset link: </strong>{{dataset}}</p>
+          {% endif %}
+          <p><strong>Code: </strong><a href="{{code}}" download>Get Code</a></p>
+          <p><strong>Model: </strong><a href="{{model}}" download>Get Model</a></p>
         </div>
       </section>
 
@@ -176,16 +132,8 @@
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <!--custom -->
     <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
-
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-
-    <script type="text/javascript">
-
-      $(document).ready( function () {
-        $('#myTable').DataTable();
-      });
-
-    </script>
+    <!--hit api -->
+    <script src="{{ url_for('static', filename='js/add-model-api.js') }}"></script>
   </body>
 
 <!-- Mirrored from iqonicthemes.com/themes/vizion/digital-marketing/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Sep 2019 10:15:32 GMT -->

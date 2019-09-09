@@ -2,12 +2,14 @@ $(document).ready(function() {
 
   $("#add-model-button").click(function() {
     var name = $("#model-name-input").val();
+    var desc = $("#model-desc-input").val();
     var model = $("#model-input").val();
 
-    if(name != "" && model != "") {
+    if(name != "" && desc != "" && model != "") {
 
       var form_data = new FormData();
       form_data.append('model_name', $("#model-name-input").val());
+      form_data.append('model_desc', $("#model-desc-input").val());
       form_data.append('dataset', $("#dataset-input").val());
       form_data.append('code', $("#code-input")[0].files[0]);
       form_data.append('model', $("#model-input")[0].files[0]);
@@ -27,7 +29,7 @@ $(document).ready(function() {
       });
 
     } else {
-      window.swal({title: "Error!", text: "Filling name and uploading model is necessary!", icon: "error"});
+      window.swal({title: "Error!", text: "Filling name, description and uploading model is necessary!", icon: "error"});
     }
   });
 

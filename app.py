@@ -110,7 +110,10 @@ def profile():
             cursor.execute("SELECT * FROM users WHERE id=%d" % (session['user_id']))
             data = cursor.fetchall()
 
-            return render_template("profile.html", name=data[0][1], img="static/images/dp/" + data[0][7],
+            cursor.execute("SELECT id, name, uname FROM model WHERE approved=1 AND DATE(puttime) = CURDATE()")
+            model_data = cursor.fetchall()
+
+            return render_template("profile.html", name=data[0][1], img="static/images/dp/" + data[0][7], model=model_data,
             logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
         else:
             return redirect("/")
@@ -152,6 +155,7 @@ def add_model():
     if request.method == "POST":
 
         model_name = request.form['model_name']
+        model_desc = request.form['model_desc']
         dataset = request.form['dataset']
         code = request.files['code']
         model = request.files['model']
@@ -170,12 +174,52 @@ def add_model():
         code.save("static/code/" + code_filename_hashed)
         model.save("static/model/" + model_filename_hashed)
 
-        cursor.execute("INSERT INTO model(name, dataset, code, model) VALUES('%s', '%s', '%s', '%s')" %
-        (model_name, dataset, code_filename_hashed, model_filename_hashed))
+        cursor.execute("SELECT name FROM users WHERE id=%d" % (session['user_id']))
+        data = cursor.fetchall()
+
+        cursor.execute("INSERT INTO model(uid, uname, name, des, dataset, code, model, approved) VALUES('%d', '%s', '%s', '%s', '%s', '%s', '%s', '%d')" %
+        (session['user_id'], data[0][0], model_name, model_desc, dataset, code_filename_hashed, model_filename_hashed, 0))
         db.commit()
 
         return jsonify({"status": "success", "title": "Success!", "message": "Model added successfully!", "href": "/profile"})
 
+@app.route("/model", methods=['GET'])
+def model():
+
+    if request.method == "GET":
+
+        id = int(request.args.get('q'))
+
+        cursor.execute("SELECT * FROM model WHERE id=%d" % (id))
+        data = cursor.fetchall()
+
+        dataset_link = "Not given!"
+        if(data[0][5] != ""):
+            dataset_link = data[0][5]
+
+        return render_template("model.html", name=data[0][3], des=data[0][4], dataset=dataset_link,
+        code="static/code/" + data[0][6], model="static/model/" + data[0][7],
+        logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
+
+@app.route("/contribution", methods=['GET'])
+def contribution():
+
+    if request.method == "GET":
+
+        cursor.execute("SELECT id, name, approved FROM model WHERE uid=%d" % (session['user_id']))
+        data = cursor.fetchall()
+
+        return render_template("contribution.html", data=data, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
+
+@app.route("/model-search", methods=['GET'])
+def model_search():
+
+    if request.method == "GET":
+
+        cursor.execute("SELECT id, uid, uname, name FROM model WHERE approved=1 ORDER BY puttime")
+        data = cursor.fetchall()
+
+        return render_template("model-search.html", data=data, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
 
 @app.route("/logout", methods=['GET'])
 def logout():

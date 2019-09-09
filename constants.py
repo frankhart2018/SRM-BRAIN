@@ -12,10 +12,10 @@ NAVBARLOGGED = """<ul class="navbar-nav ml-auto">
 <a class="nav-link" href="/about">About</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="/profile">Contributions</a>
+<a class="nav-link" href="/contribution">Contributions</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="/profile">Model Search</a>
+<a class="nav-link" href="/model-search">Model Search</a>
 </li>
 <li class="nav-item">
 <a class="nav-link" href="/add-model">Add Model</a>
