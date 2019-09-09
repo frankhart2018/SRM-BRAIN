@@ -92,7 +92,6 @@ def dp():
             if "img-input" in request.files:
                 file = request.files['img-input']
                 file_name = secure_filename(file.filename)
-                print(file_name)
                 file_ext = file_name.split(".")[1]
                 hash_id = hashlib.sha512(str(session['user_id']).encode())
                 hashed_filename = file_name.split(".")[0] + hash_id.hexdigest() + "." + file_ext
@@ -112,7 +111,7 @@ def profile():
             data = cursor.fetchall()
 
             return render_template("profile.html", name=data[0][1], img="static/images/dp/" + data[0][7],
-            logout=Markup(NAVLOGREG))
+            logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
         else:
             return redirect("/")
 
@@ -128,7 +127,7 @@ def about():
 
             return render_template("about.html", name=data[0][1], email=data[0][2], regno=data[0][3],
             department=data[0][4], year=data[0][5], img="static/images/dp/" + data[0][7],
-            logout=Markup(NAVLOGREG))
+            logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
         else:
             return redirect("/")
 
@@ -143,6 +142,40 @@ def about():
         db.commit()
 
         return jsonify({"status": "success", "title": "Success!", "message": "Details updated successfully!", "href": "/about"})
+
+@app.route("/add-model", methods=['GET', 'POST'])
+def add_model():
+
+    if request.method == "GET":
+        return render_template("add-model.html", logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
+
+    if request.method == "POST":
+
+        model_name = request.form['model_name']
+        dataset = request.form['dataset']
+        code = request.files['code']
+        model = request.files['model']
+
+        code_filename = secure_filename(code.filename)
+        model_filename = secure_filename(model.filename)
+
+        hash_id = hashlib.sha512(str(session['user_id']).encode())
+
+        if code_filename.split(".")[-1] != "zip" or model_filename.split(".")[-1] != "zip":
+            return jsonify({"status": "error", "title": "Error!", "message": "Only zip files accepted!", "href": "/add-model"})
+
+        code_filename_hashed = ''.join(code_filename.split(".")[0:-1]) + hash_id.hexdigest() + "." + code_filename.split(".")[-1]
+        model_filename_hashed = ''.join(model_filename.split(".")[0:-1]) + hash_id.hexdigest() + "." + model_filename.split(".")[-1]
+
+        code.save("static/code/" + code_filename_hashed)
+        model.save("static/model/" + model_filename_hashed)
+
+        cursor.execute("INSERT INTO model(name, dataset, code, model) VALUES('%s', '%s', '%s', '%s')" %
+        (model_name, dataset, code_filename_hashed, model_filename_hashed))
+        db.commit()
+
+        return jsonify({"status": "success", "title": "Success!", "message": "Model added successfully!", "href": "/profile"})
+
 
 @app.route("/logout", methods=['GET'])
 def logout():

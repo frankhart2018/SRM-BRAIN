@@ -6,7 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Profile - SRM Brain</title>
+    <title>Add Model - SRM Brain</title>
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
     <!-- Bootstrap CSS -->
@@ -72,35 +72,27 @@
 
       <section class="iq-login-regi">
         <div class="container">
-
-          <div class="row align-items">
-            <div class="col-lg-6 col-md-6 col-sm-12">
-              <h3>{{ name }}<h3>
-              <br>
-              <img src="{{img}}" style="width: 50%;">
-              <br><br>
-              <button type="button"
-              onmouseover="style.color='white'; style.background='#5ac890';"
-              onmouseout="style.color='#5ac890'; style.background='white';"
-              onclick="location.href='/about';"
-              style="border: 2px solid #5ac890; border-radius: 20px; padding: 0 10px; font-size: 80%;">
-                About
-              </button>
-              <br><br>
-              <button type="button"
-              onmouseover="style.color='white'; style.background='#5ac890';"
-              onmouseout="style.color='#5ac890'; style.background='white';"
-              onclick="location.href='/contributions';"
-              style="border: 2px solid #5ac890; border-radius: 20px; padding: 0 10px; font-size: 80%;">
-                Contributions
-              </button>
+          <h3>Add Model</h3>
+          <form id="form-data" method="post" enctype="multipart/form-data">
+            <div class="login-boxes mb-3">
+              <label for="model-name-input">Model Name</label>
+              <input type="text" class="form-control email-bg" id="model-name-input" placeholder="Model name">
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
-              <h3>Today's contributions</h3>
-
-              <p class="mt-3 mb-4"></p>
+            <div class="login-boxes mb-3">
+              <label for="dataset-input">Link to dataset (Optional)</label>
+              <input type="email" class="form-control email-bg" id="dataset-input" placeholder="Link to dataset">
             </div>
-          </div>
+            <div class="login-boxes mb-3">
+              <label for="code-input">Code for inference (compressed files only): </label>
+              <input type="file" id="code-input" name="code-input" placeholder="Upload code file">
+            </div>
+            <div class="login-boxes mb-3">
+              <label for="model-input">Trained model (compressed files only): </label>
+              <input type="file" id="model-input" name="model-input" placeholder="Upload file">
+            </div>
+
+            <button type="button" id="add-model-button" class="button">Add Model</button>
+          </form>
         </div>
       </section>
 
@@ -174,6 +166,8 @@
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <!--custom -->
     <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <!--hit api -->
+    <script src="{{ url_for('static', filename='js/add-model-api.js') }}"></script>
   </body>
 
 <!-- Mirrored from iqonicthemes.com/themes/vizion/digital-marketing/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Sep 2019 10:15:32 GMT -->
