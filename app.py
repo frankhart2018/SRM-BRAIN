@@ -20,7 +20,10 @@ def index():
 
     if request.method == "GET":
         if session.get("logged_in") == True:
-            return redirect("/profile")
+            if session['account_type'] == 'u':
+                return redirect("/profile")
+            elif session['account_type'] == 'a':
+                return redirect("/admin")
         return render_template("index.html", navbar=Markup(NAVBAR))
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -44,7 +47,10 @@ def login():
         else:
             if(hash.hexdigest() == data[0][6]):
                 session['user_id'] = data[0][0]
+                session['account_type'] = data[0][8]
                 session['logged_in'] = True
+                if(data[0][8] == 'a'):
+                    return jsonify({"status": "success", "title": "Success!", "message": "Logged in as admin!", "href": "/admin"})
                 if data[0][7] == '':
                     return jsonify({"status": "success", "title": "Success!", "message": "Logged in successfully!", "href": "/dp"})
                 return jsonify({"status": "success", "title": "Success!", "message": "Logged in successfully!", "href": "/profile"})
@@ -221,10 +227,74 @@ def model_search():
 
         return render_template("model-search.html", data=data, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
 
+@app.route("/admin", methods=['GET'])
+def admin():
+
+    if request.method == "GET":
+
+        cursor.execute("SELECT id FROM users WHERE account_type='a'")
+        cursor.fetchall()
+
+        user_count = cursor.rowcount
+
+        cursor.execute("SELECT id FROM model")
+        cursor.fetchall()
+
+        total_count = cursor.rowcount
+
+        cursor.execute("SELECT id FROM model WHERE approved=1")
+        cursor.fetchall()
+
+        approved_count = cursor.rowcount
+
+        not_approved_count = total_count - approved_count
+
+        return render_template("admin.html", user_count=user_count, total_count=total_count, approved_count=approved_count,
+        not_approved_count=not_approved_count, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN))
+
+@app.route("/requests", methods=['GET'])
+def requests():
+
+    if request.method == "GET":
+
+        cursor.execute("SELECT id, uid, uname, name FROM model WHERE approved=0 ORDER BY puttime")
+        data = cursor.fetchall()
+
+        return render_template("requests.html", data=data, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN))
+
+@app.route("/approve", methods=['GET', 'POST'])
+def approve():
+
+    if request.method == "GET":
+
+        id = int(request.args.get('q'))
+
+        cursor.execute("SELECT * FROM model WHERE id=%d" % (id))
+        data = cursor.fetchall()
+
+        dataset_link = "Not given!"
+        if(data[0][5] != ""):
+            dataset_link = data[0][5]
+
+        return render_template("approve.html", name=data[0][3], des=data[0][4], dataset=dataset_link,
+        code="static/code/" + data[0][6], model="static/model/" + data[0][7],
+        logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN))
+
+    if request.method == "POST":
+
+        id = int(request.form['id'])
+        status = int(request.form['status'])
+
+        cursor.execute("UPDATE model SET approved=%d WHERE id=%d" % (status, id))
+        db.commit()
+
+        return jsonify({"status": "success", "title": "Success!", "message": "Status updated successfully!", "href": "/requests"})
+
 @app.route("/logout", methods=['GET'])
 def logout():
 
     if request.method == "GET":
         session.pop('logged_in', None)
+        session.pop('account_type', None)
         session.pop('user_id', None)
         return redirect("/login")

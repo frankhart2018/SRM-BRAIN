@@ -22,6 +22,15 @@ NAVBARLOGGED = """<ul class="navbar-nav ml-auto">
 </li>
 </ul>"""
 
+NAVBARADMIN = """<ul class="navbar-nav ml-auto">
+<li class="nav-item">
+<a class="nav-link" href="/admin">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/requests">Model Requests</a>
+</li>
+</ul>"""
+
 NAVLOGREG = """<nav aria-label="breadcrumb">
 <ol class="breadcrumb">
 <li class="breadcrumb-item"><a href="/logout">Logout</a></li>
