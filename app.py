@@ -51,7 +51,7 @@ def login():
                 session['logged_in'] = True
                 if(data[0][8] == 'a'):
                     return jsonify({"status": "success", "title": "Success!", "message": "Logged in as admin!", "href": "/admin"})
-                if data[0][7] == '':
+                if data[0][7] == '-1':
                     return jsonify({"status": "success", "title": "Success!", "message": "Logged in successfully!", "href": "/dp"})
                 return jsonify({"status": "success", "title": "Success!", "message": "Logged in successfully!", "href": "/profile"})
             else:
@@ -61,27 +61,38 @@ def login():
 def register():
 
     if request.method == "GET":
-        return render_template("register.html")
+
+        cursor.execute("SELECT * FROM university")
+        data = cursor.fetchall()
+
+        data_send = [(0, "--Select University--")]
+
+        for d in data:
+            data_send.append(d)
+
+        print(data_send)
+
+        return render_template("register.html", data=data_send)
 
     if request.method == "POST":
 
         name = request.form['name']
         email = request.form['email']
-        register = request.form['register']
+        university = request.form['university']
         department = request.form['department']
         year = request.form['year']
         password = request.form['password']
 
         hash = hashlib.sha512(password.encode())
 
-        cursor.execute("SELECT * FROM users WHERE email='%s' OR regno='%s'" % (email, register))
+        cursor.execute("SELECT * FROM users WHERE email='%s'" % (email))
         cursor.fetchall()
 
         if(cursor.rowcount >= 1):
             return jsonify({"status": "error", "title": "Error!", "message": "Account already exists!", "href": "/register"})
 
-        cursor.execute("INSERT INTO users(name, email, regno, department, year, password) VALUES('%s', '%s', '%s', '%s', '%s', '%s')"
-        % (name, email, register, department, year, hash.hexdigest()))
+        cursor.execute("INSERT INTO users(name, email, university, department, year, password, dp) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s')"
+        % (name, email, university, department, year, hash.hexdigest(), "-1"))
 
         db.commit()
 
@@ -118,6 +129,8 @@ def profile():
 
             cursor.execute("SELECT id, name, uname FROM model WHERE approved=1 AND DATE(puttime) = CURDATE()")
             model_data = cursor.fetchall()
+
+            print(data, model_data)
 
             return render_template("profile.html", name=data[0][1], img="static/images/dp/" + data[0][7], model=model_data,
             logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
@@ -289,6 +302,21 @@ def approve():
         db.commit()
 
         return jsonify({"status": "success", "title": "Success!", "message": "Status updated successfully!", "href": "/requests"})
+
+@app.route("/add-univ", methods=['GET', 'POST'])
+def add_univ():
+
+    if request.method == "GET":
+        return render_template("add-univ.html", logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN))
+
+    if request.method == "POST":
+
+        university = request.form['university']
+
+        cursor.execute("INSERT INTO university(univ) VALUES('%s')" % (university))
+        db.commit()
+
+        return jsonify({"status": "success", "title": "Success!", "message": "University added successfully!", "href": "/add-univ"})
 
 @app.route("/logout", methods=['GET'])
 def logout():

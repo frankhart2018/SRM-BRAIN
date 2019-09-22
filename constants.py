@@ -29,6 +29,9 @@ NAVBARADMIN = """<ul class="navbar-nav ml-auto">
 <li class="nav-item">
 <a class="nav-link" href="/requests">Model Requests</a>
 </li>
+<li class="nav-item">
+<a class="nav-link" href="/add-univ">Add University</a>
+</li>
 </ul>"""
 
 NAVLOGREG = """<nav aria-label="breadcrumb">

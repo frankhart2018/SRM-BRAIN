@@ -97,8 +97,12 @@
                     <input type="email" class="form-control email-bg" id="email-input" placeholder="Email">
                   </div>
                   <div class="register-boxes mb-3">
-                    <label for="register-input">Register Number</label>
-                    <input type="text" class="form-control email-bg" id="register-input" placeholder="Register Number">
+                    <label for="register-input">University</label>
+                    <select class="form-control email-bg" id="university-input">
+                        {% for d in data %}
+                          <option value="{{d[0]}}">{{d[1]}}</option>
+                        {% endfor %}
+                    </select>
                   </div>
                   <div class="register-boxes mb-3">
                     <label for="department-input">Department</label>

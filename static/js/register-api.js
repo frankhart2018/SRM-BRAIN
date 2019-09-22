@@ -8,13 +8,13 @@ $(document).ready(function() {
   $("#register-button").click(function() {
     var name = $("#name-input").val();
     var email = $("#email-input").val();
-    var register = $("#register-input").val();
+    var university = $("#university-input").val();
     var department = $("#department-input").val();
     var year = $("#year-input").val();
     var password = $("#password-input").val();
     var cpassword = $("#cpassword-input").val();
 
-    if(name != "" && email != "" && register != "" && department != "0" && year != "0" && password != "" && cpassword != "") {
+    if(name != "" && email != "" && university != "" && department != "0" && year != "0" && password != "" && cpassword != "") {
 
       var error = 0;
       var errorString = "";
@@ -22,11 +22,6 @@ $(document).ready(function() {
       if(!validateEmail(email)) {
         error++;
         errorString += "Invalid email address!\n";
-      }
-
-      if(register.length != 15) {
-        error ++;
-        errorString += "Invalid register number!\n";
       }
 
       if(password != cpassword) {
@@ -42,7 +37,7 @@ $(document).ready(function() {
           url: "/register",
           method: "post",
           dataType: "json",
-          data: {"name": name, "email": email, "register": register, "department": department, "year": year, "password": password},
+          data: {"name": name, "email": email, "university": university, "department": department, "year": year, "password": password},
           success: function(result) {
             window.swal({title: result.title, text: result.message, icon: result.status}).then(function() {
               window.location = result.href;
