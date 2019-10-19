@@ -7,6 +7,8 @@ $(document).ready(function() {
 
     if(name != "" && desc != "" && model != "") {
 
+      var core_str = "/srmbrain";
+
       var form_data = new FormData();
       form_data.append('model_name', $("#model-name-input").val());
       form_data.append('model_desc', $("#model-desc-input").val());
@@ -15,7 +17,7 @@ $(document).ready(function() {
       form_data.append('model', $("#model-input")[0].files[0]);
 
       $.ajax({
-        url: "/add-model",
+        url: core_str + "/add-model",
         method: "post",
         data: form_data,
         contentType: false,

@@ -59,7 +59,7 @@
         <div class="row">
           <div class="col-sm-12">
             <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="/srmbrain">
             <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid logo" alt="img" style="width: 40%; height: 30%;">
             <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid logo-white" alt="img" style="width: 30%; height: 20%;">
             </a>
@@ -100,7 +100,7 @@
                 {% for d in data %}
                   <tr>
                     <td>{{i}}</td>
-                    <td><a href="/approve?q={{d[0]}}">{{d[3]}}</a></td>
+                    <td><a href="/srmbrain/approve?q={{d[0]}}">{{d[3]}}</a></td>
                     <td>{{d[2]}}</td>
                   </tr>
                   {% set i = i + 1 %}
@@ -122,7 +122,7 @@
         <div class="row">
           <div class="col-auto mr-auto">
             <div class="footer-logo">
-              <a href="index-2.html"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="img" style="width: 30%; height: 20%;"></a>
+              <a href="/srmbrain"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="img" style="width: 30%; height: 20%;"></a>
             </div>
           </div>
 

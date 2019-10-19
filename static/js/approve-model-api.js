@@ -5,8 +5,10 @@ $(document).ready(function() {
     var url = $(location).attr("href");
     var id = url.split("=")[1];
 
+    var core_str = "/srmbrain";
+
     $.ajax({
-      url: "/approve",
+      url: core_str + "/approve",
       method: "post",
       dataType: "json",
       data: {"id": id, "status": 1},
@@ -24,8 +26,10 @@ $(document).ready(function() {
     var url = $(location).attr("href");
     var id = url.split("=")[1];
 
+    var core_str = "/srmbrain";
+
     $.ajax({
-      url: "/approve",
+      url: core_str + "/approve",
       method: "post",
       dataType: "json",
       data: {"id": id, "status": -1},

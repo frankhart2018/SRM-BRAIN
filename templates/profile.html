@@ -50,7 +50,7 @@
         <div class="row">
           <div class="col-sm-12">
             <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="/srmbrain">
             <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid logo" alt="img" style="width: 40%; height: 30%;">
             <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid logo-white" alt="img" style="width: 30%; height: 20%;">
             </a>
@@ -84,7 +84,7 @@
               <button type="button"
               onmouseover="style.color='white'; style.background='#5ac890';"
               onmouseout="style.color='#5ac890'; style.background='white';"
-              onclick="location.href='/about';"
+              onclick="location.href='/srmbrain/about';"
               style="border: 2px solid #5ac890; border-radius: 20px; padding: 0 10px; font-size: 80%;">
                 About
               </button>
@@ -92,7 +92,7 @@
               <button type="button"
               onmouseover="style.color='white'; style.background='#5ac890';"
               onmouseout="style.color='#5ac890'; style.background='white';"
-              onclick="location.href='/contribution';"
+              onclick="location.href='/srmbrain/contribution';"
               style="border: 2px solid #5ac890; border-radius: 20px; padding: 0 10px; font-size: 80%;">
                 Contributions
               </button>
@@ -117,7 +117,7 @@
                     {% for d in model %}
                       <tr>
                         <td>{{i}}</td>
-                        <td><a href="/model?q={{d[0]}}">{{d[1]}}</a></td>
+                        <td><a href="/srmbrain/model?q={{d[0]}}">{{d[1]}}</a></td>
                         <td>{{d[2]}}</td>
                       </tr>
                       {% set i = i + 1 %}
@@ -141,7 +141,7 @@
         <div class="row">
           <div class="col-auto mr-auto">
             <div class="footer-logo">
-              <a href="index-2.html"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="img" style="width: 30%; height: 20%;"></a>
+              <a href="/srmbrain"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="img" style="width: 30%; height: 20%;"></a>
             </div>
           </div>
 

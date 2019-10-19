@@ -23,8 +23,10 @@ $(document).ready(function() {
         window.swal({title: "Error!", text: errorString, icon: "error"});
       } else {
 
+        var core_str = "/srmbrain";
+
         $.ajax({
-          url: "/login",
+          url: core_str + "/login",
           method: "post",
           dataType: "json",
           data: {"email": email,  "password": password},

@@ -15,18 +15,20 @@ app.config['SESSION_TYPE'] = 'filesystem'
 def not_found(e):
     return render_template("404-error.html")
 
-@app.route("/", methods=['GET'])
+core_str = "/srmbrain"
+
+@app.route(core_str + "/", methods=['GET'])
 def index():
 
     if request.method == "GET":
         if session.get("logged_in") == True:
             if session['account_type'] == 'u':
-                return redirect("/profile")
+                return redirect(core_str + "/profile")
             elif session['account_type'] == 'a':
-                return redirect("/admin")
+                return redirect(core_str + "/admin")
         return render_template("index.html", navbar=Markup(NAVBAR))
 
-@app.route("/login", methods=['GET', 'POST'])
+@app.route(core_str + "/login", methods=['GET', 'POST'])
 def login():
 
     if request.method == "GET":
@@ -50,14 +52,14 @@ def login():
                 session['account_type'] = data[0][8]
                 session['logged_in'] = True
                 if(data[0][8] == 'a'):
-                    return jsonify({"status": "success", "title": "Success!", "message": "Logged in as admin!", "href": "/admin"})
+                    return jsonify({"status": "success", "title": "Success!", "message": "Logged in as admin!", "href": core_str + "/admin"})
                 if data[0][7] == '-1':
-                    return jsonify({"status": "success", "title": "Success!", "message": "Logged in successfully!", "href": "/dp"})
-                return jsonify({"status": "success", "title": "Success!", "message": "Logged in successfully!", "href": "/profile"})
+                    return jsonify({"status": "success", "title": "Success!", "message": "Logged in successfully!", "href": core_str + "/dp"})
+                return jsonify({"status": "success", "title": "Success!", "message": "Logged in successfully!", "href": core_str + "/profile"})
             else:
-                return jsonify({"status": "error", "title": "Error!", "message": "Incorrect credentials", "href": "/login"})
+                return jsonify({"status": "error", "title": "Error!", "message": "Incorrect credentials", "href": core_str + "/login"})
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route(core_str + '/register', methods=['GET', 'POST'])
 def register():
 
     if request.method == "GET":
@@ -89,16 +91,16 @@ def register():
         cursor.fetchall()
 
         if(cursor.rowcount >= 1):
-            return jsonify({"status": "error", "title": "Error!", "message": "Account already exists!", "href": "/register"})
+            return jsonify({"status": "error", "title": "Error!", "message": "Account already exists!", "href": core_str + "/register"})
 
         cursor.execute("INSERT INTO users(name, email, university, department, year, password, dp) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s')"
         % (name, email, university, department, year, hash.hexdigest(), "-1"))
 
         db.commit()
 
-        return jsonify({"status": "success", "title": "Success!", "message": "Registerted successfully!", "href": "/login"})
+        return jsonify({"status": "success", "title": "Success!", "message": "Registerted successfully!", "href": core_str + "/login"})
 
-@app.route("/dp", methods=['GET', 'POST'])
+@app.route(core_str + "/dp", methods=['GET', 'POST'])
 def dp():
 
     if request.method == "GET":
@@ -117,9 +119,9 @@ def dp():
                 location = "static/images/dp/" + hashed_filename
                 file.save(location)
 
-                return redirect("/profile")
+                return redirect(core_str + "/profile")
 
-@app.route("/profile", methods=['GET'])
+@app.route(core_str + "/profile", methods=['GET'])
 def profile():
 
     if request.method == "GET":
@@ -135,9 +137,9 @@ def profile():
             return render_template("profile.html", name=data[0][1], img="static/images/dp/" + data[0][7], model=model_data,
             logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
         else:
-            return redirect("/")
+            return redirect(core_str + "/")
 
-@app.route("/about", methods=['GET', 'POST'])
+@app.route(core_str + "/about", methods=['GET', 'POST'])
 def about():
 
     if request.method == "GET":
@@ -151,7 +153,7 @@ def about():
             department=data[0][4], year=data[0][5], img="static/images/dp/" + data[0][7],
             logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
         else:
-            return redirect("/")
+            return redirect(core_str + "/")
 
     if request.method == "POST":
 
@@ -163,9 +165,9 @@ def about():
                         % (name, email, register, session['user_id']))
         db.commit()
 
-        return jsonify({"status": "success", "title": "Success!", "message": "Details updated successfully!", "href": "/about"})
+        return jsonify({"status": "success", "title": "Success!", "message": "Details updated successfully!", "href": core_str + "/about"})
 
-@app.route("/add-model", methods=['GET', 'POST'])
+@app.route(core_str + "/add-model", methods=['GET', 'POST'])
 def add_model():
 
     if request.method == "GET":
@@ -185,7 +187,7 @@ def add_model():
         hash_id = hashlib.sha512(str(session['user_id']).encode())
 
         if code_filename.split(".")[-1] != "zip" or model_filename.split(".")[-1] != "zip":
-            return jsonify({"status": "error", "title": "Error!", "message": "Only zip files accepted!", "href": "/add-model"})
+            return jsonify({"status": "error", "title": "Error!", "message": "Only zip files accepted!", "href": core_str + "/add-model"})
 
         code_filename_hashed = ''.join(code_filename.split(".")[0:-1]) + hash_id.hexdigest() + "." + code_filename.split(".")[-1]
         model_filename_hashed = ''.join(model_filename.split(".")[0:-1]) + hash_id.hexdigest() + "." + model_filename.split(".")[-1]
@@ -200,9 +202,9 @@ def add_model():
         (session['user_id'], data[0][0], model_name, model_desc, dataset, code_filename_hashed, model_filename_hashed, 0))
         db.commit()
 
-        return jsonify({"status": "success", "title": "Success!", "message": "Model added successfully!", "href": "/profile"})
+        return jsonify({"status": "success", "title": "Success!", "message": "Model added successfully!", "href": core_str + "/profile"})
 
-@app.route("/model", methods=['GET'])
+@app.route(core_str + "/model", methods=['GET'])
 def model():
 
     if request.method == "GET":
@@ -220,7 +222,7 @@ def model():
         code="static/code/" + data[0][6], model="static/model/" + data[0][7],
         logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
 
-@app.route("/contribution", methods=['GET'])
+@app.route(core_str + "/contribution", methods=['GET'])
 def contribution():
 
     if request.method == "GET":
@@ -230,7 +232,7 @@ def contribution():
 
         return render_template("contribution.html", data=data, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
 
-@app.route("/model-search", methods=['GET'])
+@app.route(core_str + "/model-search", methods=['GET'])
 def model_search():
 
     if request.method == "GET":
@@ -240,7 +242,7 @@ def model_search():
 
         return render_template("model-search.html", data=data, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
 
-@app.route("/admin", methods=['GET'])
+@app.route(core_str + "/admin", methods=['GET'])
 def admin():
 
     if request.method == "GET":
@@ -265,7 +267,7 @@ def admin():
         return render_template("admin.html", user_count=user_count, total_count=total_count, approved_count=approved_count,
         not_approved_count=not_approved_count, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN))
 
-@app.route("/requests", methods=['GET'])
+@app.route(core_str + "/requests", methods=['GET'])
 def requests():
 
     if request.method == "GET":
@@ -275,7 +277,7 @@ def requests():
 
         return render_template("requests.html", data=data, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN))
 
-@app.route("/approve", methods=['GET', 'POST'])
+@app.route(core_str + "/approve", methods=['GET', 'POST'])
 def approve():
 
     if request.method == "GET":
@@ -301,9 +303,9 @@ def approve():
         cursor.execute("UPDATE model SET approved=%d WHERE id=%d" % (status, id))
         db.commit()
 
-        return jsonify({"status": "success", "title": "Success!", "message": "Status updated successfully!", "href": "/requests"})
+        return jsonify({"status": "success", "title": "Success!", "message": "Status updated successfully!", "href": core_str + "/requests"})
 
-@app.route("/add-univ", methods=['GET', 'POST'])
+@app.route(core_str + "/add-univ", methods=['GET', 'POST'])
 def add_univ():
 
     if request.method == "GET":
@@ -316,13 +318,13 @@ def add_univ():
         cursor.execute("INSERT INTO university(univ) VALUES('%s')" % (university))
         db.commit()
 
-        return jsonify({"status": "success", "title": "Success!", "message": "University added successfully!", "href": "/add-univ"})
+        return jsonify({"status": "success", "title": "Success!", "message": "University added successfully!", "href": core_str + "/add-univ"})
 
-@app.route("/logout", methods=['GET'])
+@app.route(core_str + "/logout", methods=['GET'])
 def logout():
 
     if request.method == "GET":
         session.pop('logged_in', None)
         session.pop('account_type', None)
         session.pop('user_id', None)
-        return redirect("/login")
+        return redirect(core_str + "/login")

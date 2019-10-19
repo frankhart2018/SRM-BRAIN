@@ -5,8 +5,10 @@ $(document).ready(function() {
 
     if(university != "") {
 
+      var core_str = "/srmbrain";
+
       $.ajax({
-        url: "/add-univ",
+        url: core_str + "/add-univ",
         method: "post",
         dataType: "json",
         data: {"university": university},

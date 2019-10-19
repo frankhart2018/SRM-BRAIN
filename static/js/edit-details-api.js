@@ -29,8 +29,10 @@ $(document).ready(function() {
         window.swal({title: "Error!", text: errorString, icon: "error"});
       } else {
 
+        var core_str = "/srmbrain";
+
         $.ajax({
-          url: "/about",
+          url: core_str + "/about",
           method: "post",
           dataType: "json",
           data: {"name": name, "email": email,  "register": register},

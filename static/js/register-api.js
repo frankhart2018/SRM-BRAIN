@@ -33,8 +33,10 @@ $(document).ready(function() {
         window.swal({title: "Error!", text: errorString, icon: "error"});
       } else {
 
+        var core_str = "/srmbrain";
+
         $.ajax({
-          url: "/register",
+          url: core_str + "/register",
           method: "post",
           dataType: "json",
           data: {"name": name, "email": email, "university": university, "department": department, "year": year, "password": password},
