@@ -330,11 +330,3 @@ def logout():
         session.pop('account_type', None)
         session.pop('user_id', None)
         return redirect(core_str + "/login")
-
-@app.route(core_str + "/gitpull", methods=['GET'])
-def gitpull():
-
-    if request.method == "GET":
-        subprocess.call("gitpull")
-
-        return jsonify({"status": "Changes updated!"})
