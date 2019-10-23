@@ -329,3 +329,13 @@ def logout():
         session.pop('account_type', None)
         session.pop('user_id', None)
         return redirect(core_str + "/login")
+
+@app.route(core_str + "/gitpull", methods=['GET'])
+def gitpull():
+
+    if request.method == "GET":
+        cur_loc = os.getcwd()
+        cmd = "cd " + cur_loc + "; sudo git pull; sbreload"
+        os.system(cmd)
+
+        return jsonify({"status": "Changes updated!"})
