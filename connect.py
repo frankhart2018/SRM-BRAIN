@@ -4,7 +4,7 @@ db = mysql.connector.connect(
     host = "localhost",
     user = "root",
     passwd = "root",
-    database = "srm-brain"
+    database = "srmbrain"
 )
 
 cursor = db.cursor()

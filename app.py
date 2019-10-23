@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, redirect, jsonify, Response, Markup, session
 import hashlib
 from werkzeug.utils import secure_filename
+import os
 
 from connect import cursor, db
 from constants import *
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=os.path.abspath('/opt/srmbrain/'))
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.secret_key = 'my-secret-key'
@@ -93,8 +94,8 @@ def register():
         if(cursor.rowcount >= 1):
             return jsonify({"status": "error", "title": "Error!", "message": "Account already exists!", "href": core_str + "/register"})
 
-        cursor.execute("INSERT INTO users(name, email, university, department, year, password, dp) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s')"
-        % (name, email, university, department, year, hash.hexdigest(), "-1"))
+        cursor.execute("INSERT INTO users(name, email, university, department, year, password, dp, account_type) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')"
+        % (name, email, university, department, year, hash.hexdigest(), "-1", "u"))
 
         db.commit()
 
@@ -104,7 +105,7 @@ def register():
 def dp():
 
     if request.method == "GET":
-        return render_template("dp.html", logout=NAVLOGREG)
+        return render_template("dp.html", logout=Markup(NAVLOGREG))
 
     if request.method == "POST":
         if "login-button" in request.form:
@@ -116,7 +117,7 @@ def dp():
                 hashed_filename = file_name.split(".")[0] + hash_id.hexdigest() + "." + file_ext
                 cursor.execute("UPDATE users SET dp='%s' WHERE id='%d'" % (hashed_filename, session['user_id']) )
                 db.commit()
-                location = "static/images/dp/" + hashed_filename
+                location = "images/dp/" + hashed_filename
                 file.save(location)
 
                 return redirect(core_str + "/profile")
@@ -134,7 +135,7 @@ def profile():
 
             print(data, model_data)
 
-            return render_template("profile.html", name=data[0][1], img="static/images/dp/" + data[0][7], model=model_data,
+            return render_template("profile.html", name=data[0][1], img="images/dp/" + data[0][7], model=model_data,
             logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
         else:
             return redirect(core_str + "/")
@@ -147,10 +148,11 @@ def about():
             cursor.execute("SELECT * FROM users WHERE id=%d" % (session['user_id']))
             data = cursor.fetchall()
 
-            print(data)
+            cursor.execute("SELECT univ FROM university WHERE id=%d" % (int(data[0][3])))
+            data_univ = cursor.fetchone()
 
-            return render_template("about.html", name=data[0][1], email=data[0][2], regno=data[0][3],
-            department=data[0][4], year=data[0][5], img="static/images/dp/" + data[0][7],
+            return render_template("about.html", name=data[0][1], email=data[0][2], university=data_univ[0],
+            department=data[0][4], year=data[0][5], img="images/dp/" + data[0][7],
             logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
         else:
             return redirect(core_str + "/")
@@ -159,10 +161,9 @@ def about():
 
         name = request.form['name']
         email = request.form['email']
-        register = request.form['register']
 
-        cursor.execute("UPDATE users SET name='%s', email='%s', regno='%s' WHERE id=%d"
-                        % (name, email, register, session['user_id']))
+        cursor.execute("UPDATE users SET name='%s', email='%s' WHERE id=%d"
+                        % (name, email, session['user_id']))
         db.commit()
 
         return jsonify({"status": "success", "title": "Success!", "message": "Details updated successfully!", "href": core_str + "/about"})
@@ -192,8 +193,8 @@ def add_model():
         code_filename_hashed = ''.join(code_filename.split(".")[0:-1]) + hash_id.hexdigest() + "." + code_filename.split(".")[-1]
         model_filename_hashed = ''.join(model_filename.split(".")[0:-1]) + hash_id.hexdigest() + "." + model_filename.split(".")[-1]
 
-        code.save("static/code/" + code_filename_hashed)
-        model.save("static/model/" + model_filename_hashed)
+        code.save("code/" + code_filename_hashed)
+        model.save("model/" + model_filename_hashed)
 
         cursor.execute("SELECT name FROM users WHERE id=%d" % (session['user_id']))
         data = cursor.fetchall()
@@ -219,7 +220,7 @@ def model():
             dataset_link = data[0][5]
 
         return render_template("model.html", name=data[0][3], des=data[0][4], dataset=dataset_link,
-        code="static/code/" + data[0][6], model="static/model/" + data[0][7],
+        code="code/" + data[0][6], model="model/" + data[0][7],
         logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
 
 @app.route(core_str + "/contribution", methods=['GET'])
@@ -292,7 +293,7 @@ def approve():
             dataset_link = data[0][5]
 
         return render_template("approve.html", name=data[0][3], des=data[0][4], dataset=dataset_link,
-        code="static/code/" + data[0][6], model="static/model/" + data[0][7],
+        code="code/" + data[0][6], model="model/" + data[0][7],
         logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN))
 
     if request.method == "POST":
