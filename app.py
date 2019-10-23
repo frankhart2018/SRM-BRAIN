@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, jsonify, Response, 
 import hashlib
 from werkzeug.utils import secure_filename
 import os
+import subprocess
 
 from connect import cursor, db
 from constants import *
@@ -334,8 +335,6 @@ def logout():
 def gitpull():
 
     if request.method == "GET":
-        cur_loc = os.getcwd()
-        cmd = "gitpull"
-        os.system(cmd)
+        subprocess.call("gitpull")
 
         return jsonify({"status": "Changes updated!"})
