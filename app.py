@@ -335,7 +335,11 @@ def gitpull():
 
     if request.method == "GET":
         cur_loc = os.getcwd()
-        cmd = "cd " + cur_loc + "; sudo git pull; sbreload"
+        cmd = "cd " + cur_loc
+        os.system(cmd)
+        cmd = "git pull"
+        os.system(cmd)
+        cmd = "sbreload"
         os.system(cmd)
 
         return jsonify({"status": "Changes updated!"})
