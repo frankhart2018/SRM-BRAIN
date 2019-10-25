@@ -98,15 +98,15 @@
                   </div>
                   <div class="register-boxes mb-3">
                     <label for="register-input">University</label>
-                    <select class="form-control email-bg" id="university-input">
+                    <select class="email-bg" id="university-input" style="padding: 12px 10px 12px 10px; width: 100%;">
                         {% for d in data_univ %}
                           <option value="{{d[0]}}">{{d[1]}}</option>
                         {% endfor %}
                     </select>
                   </div>
                   <div class="register-boxes mb-3">
-                    <label for="department-input">Department</label>
-                    <select class="form-control email-bg" id="department-input">
+                    <label for="department-input">Department</label><br>
+                    <select class="email-bg" id="department-input" style="padding: 12px 10px 12px 10px; width: 100%;">
                         {% for d in data_dept %}
                           <option value="{{d[0]}}">{{d[1]}}</option>
                         {% endfor %}
@@ -114,7 +114,7 @@
                   </div>
                   <div class="register-boxes mb-3">
                     <label for="year-input">Year</label>
-                    <select class="form-control email-bg" id="year-input">
+                    <select class="email-bg" id="year-input" style="padding: 12px 10px 12px 10px; width: 100%;">
                         <option value="0">--Select year--</option>
                         <option value="I">I</option>
                         <option value="II">II</option>
