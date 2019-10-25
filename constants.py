@@ -30,7 +30,7 @@ NAVBARADMIN = """<ul class="navbar-nav ml-auto">
 <a class="nav-link" href="/srmbrain/requests">Model Requests</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="/srmbrain/add-univ">Add University</a>
+<a class="nav-link" href="/srmbrain/add-details">Add Details</a>
 </li>
 </ul>"""
 

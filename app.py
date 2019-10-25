@@ -47,7 +47,7 @@ def login():
         data = cursor.fetchall()
 
         if(cursor.rowcount == 0):
-            return jsonify({"status": "error", "title": "Error!", "message": "Account does not exist!"})
+            return jsonify({"status": "error", "title": "Error!", "message": "Account does not exist!", "href": core_str + "/login"})
         else:
             if(hash.hexdigest() == data[0][6]):
                 session['user_id'] = data[0][0]
@@ -67,16 +67,22 @@ def register():
     if request.method == "GET":
 
         cursor.execute("SELECT * FROM university")
-        data = cursor.fetchall()
+        data_univ = cursor.fetchall()
 
-        data_send = [(0, "--Select University--")]
+        data_send_univ = [(0, "--Select University--")]
 
-        for d in data:
-            data_send.append(d)
+        for d in data_univ:
+            data_send_univ.append(d)
 
-        print(data_send)
+        cursor.execute("SELECT * FROM department ORDER BY full_dept")
+        data_dept = cursor.fetchall()
 
-        return render_template("register.html", data=data_send)
+        data_send_dept = [("NULL", "--Select Department--")]
+
+        for d in data_dept:
+            data_send_dept.append(d)
+
+        return render_template("register.html", data_univ=data_send_univ, data_dept=data_send_dept)
 
     if request.method == "POST":
 
@@ -249,7 +255,7 @@ def admin():
 
     if request.method == "GET":
 
-        cursor.execute("SELECT id FROM users WHERE account_type='a'")
+        cursor.execute("SELECT id FROM users WHERE account_type='u'")
         cursor.fetchall()
 
         user_count = cursor.rowcount
@@ -307,20 +313,32 @@ def approve():
 
         return jsonify({"status": "success", "title": "Success!", "message": "Status updated successfully!", "href": core_str + "/requests"})
 
-@app.route(core_str + "/add-univ", methods=['GET', 'POST'])
+@app.route(core_str + "/add-details", methods=['GET', 'POST'])
 def add_univ():
 
     if request.method == "GET":
-        return render_template("add-univ.html", logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN))
+        return render_template("add-details.html", logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN))
 
     if request.method == "POST":
 
-        university = request.form['university']
+        if "university" in request.form:
 
-        cursor.execute("INSERT INTO university(univ) VALUES('%s')" % (university))
-        db.commit()
+            university = request.form['university']
 
-        return jsonify({"status": "success", "title": "Success!", "message": "University added successfully!", "href": core_str + "/add-univ"})
+            cursor.execute("INSERT INTO university(univ) VALUES('%s')" % (university))
+            db.commit()
+
+            return jsonify({"status": "success", "title": "Success!", "message": "University added successfully!", "href": core_str + "/add-details"})
+
+        else:
+
+            dept_abbr = request.form['dept_abbr']
+            dept = request.form['dept']
+
+            cursor.execute("INSERT INTO department(dept, full_dept) VALUES('%s', '%s')" % (dept_abbr, dept))
+            db.commit()
+
+            return jsonify({"status": "success", "title": "Success!", "message": "Department added successfully!", "href": core_str + "/add-details"})
 
 @app.route(core_str + "/logout", methods=['GET'])
 def logout():

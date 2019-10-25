@@ -99,7 +99,7 @@
                   <div class="register-boxes mb-3">
                     <label for="register-input">University</label>
                     <select class="form-control email-bg" id="university-input">
-                        {% for d in data %}
+                        {% for d in data_univ %}
                           <option value="{{d[0]}}">{{d[1]}}</option>
                         {% endfor %}
                     </select>
@@ -107,9 +107,9 @@
                   <div class="register-boxes mb-3">
                     <label for="department-input">Department</label>
                     <select class="form-control email-bg" id="department-input">
-                        <option value="0">--Select department--</option>
-                        <option value="cse">CSE</option>
-                        <option value="IT">IT</option>
+                        {% for d in data_dept %}
+                          <option value="{{d[0]}}">{{d[1]}}</option>
+                        {% endfor %}
                     </select>
                   </div>
                   <div class="register-boxes mb-3">
