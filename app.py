@@ -128,6 +128,11 @@ def dp():
                 file.save(location)
 
                 return redirect(core_str + "/profile")
+        else:
+            cursor.execute("UPDATE users SET dp='placeholder.png' WHERE id='%d'" % (session['user_id']))
+            db.commit()
+
+            return redirect(core_str + "/profile")
 
 @app.route(core_str + "/profile", methods=['GET'])
 def profile():
