@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <!-- Responsive CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </head>
   <body>
     <!-- loading -->
@@ -73,6 +75,12 @@
     <div class="main-content">
       <!--================================
       Login -->
+
+      {% if verified == '1' %}
+        <script type="text/javascript">
+          swal({title: "Success", text: "Account verified successfully!", icon: "success"});
+        </script>
+      {% endif %}
 
       <section class="iq-login-regi">
         <div class="container">
@@ -151,7 +159,7 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first -->
     <script data-cfasync="false" src="https://iqonicthemes.com/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
     <!-- popper -->
     <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>

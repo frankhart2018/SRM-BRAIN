@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, jsonify, Response, Markup, session
+from flask_mail import Mail, Message
 import hashlib
 from werkzeug.utils import secure_filename
 import os
@@ -12,6 +13,14 @@ app = Flask(__name__, static_folder=os.path.abspath('/opt/srmbrain/'))
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.secret_key = 'my-secret-key'
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'labsskynet@gmail.com'
+app.config['MAIL_PASSWORD'] = 'password98@'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail = Mail(app)
 
 @app.errorhandler(404)
 def not_found(e):
@@ -55,6 +64,8 @@ def login():
                 session['logged_in'] = True
                 if(data[0][8] == 'a'):
                     return jsonify({"status": "success", "title": "Success!", "message": "Logged in as admin!", "href": core_str + "/admin"})
+                if data[0][9] == 0:
+                    return jsonify({"status": "error", "title": "Error!", "message": "Verify email address first!", "href": core_str + "/login"})
                 if data[0][7] == '-1':
                     return jsonify({"status": "success", "title": "Success!", "message": "Logged in successfully!", "href": core_str + "/dp"})
                 return jsonify({"status": "success", "title": "Success!", "message": "Logged in successfully!", "href": core_str + "/profile"})
@@ -105,6 +116,19 @@ def register():
         % (name, email, university, department, year, hash.hexdigest(), "-1", "u"))
 
         db.commit()
+
+        msg = Message("Registered successfully", sender="labsskynet@gmail.com", recipients = [email])
+        msg.body = """
+Hey there,
+
+It's great to have you as a part of this growing community. We are eager for your journey with SRM Brain to commence. But before you begin, please verify your email address as this will ease our line of communication with you. Click on the following link to verify your email address:-
+
+        http://care.srmist.edu.in/srmbrain/verify?q=%s
+
+Thanks
+Team Skynet
+        """ % (email)
+        mail.send(msg)
 
         return jsonify({"status": "success", "title": "Success!", "message": "Registerted successfully!", "href": core_str + "/login"})
 
@@ -344,6 +368,18 @@ def add_univ():
             db.commit()
 
             return jsonify({"status": "success", "title": "Success!", "message": "Department added successfully!", "href": core_str + "/add-details"})
+
+@app.route(core_str + "/verify", methods=['GET'])
+def verify():
+
+    if request.method == "GET":
+
+        email = request.args.get('q')
+
+        cursor.execute("UPDATE users SET status=1 WHERE email='%s'" % (email))
+        db.commit()
+
+        return render_template("login.html", verified="1")
 
 @app.route(core_str + "/logout", methods=['GET'])
 def logout():
