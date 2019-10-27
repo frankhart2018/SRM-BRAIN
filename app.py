@@ -126,7 +126,7 @@ It's great to have you as a part of this growing community. We are eager for you
         http://care.srmist.edu.in/srmbrain/verify?q=%s
 
 Thanks
-Team Skynet
+Team SRM Brain
         """ % (email)
         mail.send(msg)
 
@@ -380,6 +380,55 @@ def verify():
         db.commit()
 
         return render_template("login.html", verified="1")
+
+@app.route(core_str + "/reset", methods=['GET', 'POST'])
+def reset():
+
+    if request.method == "GET":
+        return render_template("reset.html")
+
+    if request.method == "POST":
+
+        email = request.form['email']
+
+        cursor.execute("SELECT id FROM users WHERE email='%s'" % (email))
+        cursor.fetchone()
+        print(cursor.rowcount)
+        if(cursor.rowcount == -1):
+            return jsonify({"status": "error", "title": "Error!", "message": "No account found connected to this email!", "href": core_str + "/login"})
+
+        msg = Message("Reset password", sender="labsskynet@gmail.com", recipients = [email])
+        msg.body = """
+Hey there,
+
+Click on the following link to reset your password:-
+
+        http://care.srmist.edu.in/srmbrain/reset-pass?q=%s
+
+Thanks
+Team SRM Brain
+        """ % (email)
+        mail.send(msg)
+
+        return jsonify({"status": "success", "title": "Success!", "message": "Reset mail sent successfully!", "href": core_str + "/login"})
+
+@app.route(core_str + "/reset-pass", methods=['GET', 'POST'])
+def reset_pass():
+
+    if request.method == "GET":
+        return render_template("reset-pass.html")
+
+    if request.method == "POST":
+
+        email = request.form['email']
+        password = request.form['password']
+
+        hash = hashlib.sha512(password.encode())
+
+        cursor.execute("UPDATE users SET password='%s' WHERE email='%s'" % (hash.hexdigest(), email))
+        db.commit()
+
+        return jsonify({"status": "success", "title": "Success!", "message": "Password reset successfully!", "href": core_str + "/login"})
 
 @app.route(core_str + "/logout", methods=['GET'])
 def logout():
