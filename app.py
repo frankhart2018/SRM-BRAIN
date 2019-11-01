@@ -3,7 +3,6 @@ from flask_mail import Mail, Message
 import hashlib
 from werkzeug.utils import secure_filename
 import os
-import subprocess
 
 from connect import cursor, db
 from constants import *
