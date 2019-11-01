@@ -394,6 +394,8 @@ def reset():
 
         email = request.form['email']
 
+        hash = hashlib.sha512(email.encode())
+
         cursor.execute("SELECT id FROM users WHERE email='%s'" % (email))
         cursor.fetchone()
         print(cursor.rowcount)
@@ -410,7 +412,7 @@ Click on the following link to reset your password:-
 
 Thanks
 Team SRM Brain
-        """ % (email)
+        """ % (hash.hexdigest())
         mail.send(msg)
 
         return jsonify({"status": "success", "title": "Success!", "message": "Reset mail sent successfully!", "href": core_str + "/login"})
@@ -428,7 +430,7 @@ def reset_pass():
 
         hash = hashlib.sha512(password.encode())
 
-        cursor.execute("UPDATE users SET password='%s' WHERE email='%s'" % (hash.hexdigest(), email))
+        cursor.execute("UPDATE users SET password='%s' WHERE SHA2(email, 512)='%s'" % (hash.hexdigest(), email))
         db.commit()
 
         return jsonify({"status": "success", "title": "Success!", "message": "Password reset successfully!", "href": core_str + "/login"})
