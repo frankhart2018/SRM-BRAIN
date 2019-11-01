@@ -36,13 +36,13 @@ def index():
                 return redirect(core_str + "/profile")
             elif session['account_type'] == 'a':
                 return redirect(core_str + "/admin")
-        return render_template("index.html", navbar=Markup(NAVBAR))
+        return render_template("index.html", navbar=Markup(NAVBAR), footer=Markup(FOOTER))
 
 @app.route(core_str + "/login", methods=['GET', 'POST'])
 def login():
 
     if request.method == "GET":
-        return render_template("login.html", navbar=Markup(NAVBAR))
+        return render_template("login.html", navbar=Markup(NAVBAR), footer=Markup(FOOTER))
 
     if request.method == "POST":
 
@@ -92,7 +92,8 @@ def register():
         for d in data_dept:
             data_send_dept.append(d)
 
-        return render_template("register.html", data_univ=data_send_univ, data_dept=data_send_dept)
+        return render_template("register.html", data_univ=data_send_univ, data_dept=data_send_dept,
+                                navbar=Markup(NAVBAR), footer=Markup(FOOTER))
 
     if request.method == "POST":
 
@@ -135,7 +136,7 @@ Team SRM Brain
 def dp():
 
     if request.method == "GET":
-        return render_template("dp.html", logout=Markup(NAVLOGREG))
+        return render_template("dp.html", logout=Markup(NAVLOGREG), footer=Markup(FOOTER))
 
     if request.method == "POST":
         if "login-button" in request.form:
@@ -175,7 +176,7 @@ def profile():
             print(data, model_data)
 
             return render_template("profile.html", name=data[0][1], img="images/dp/" + data[0][7], model=model_data,
-            logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
+            logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED), footer=Markup(FOOTER))
         else:
             return redirect(core_str + "/")
 
@@ -192,7 +193,7 @@ def about():
 
             return render_template("about.html", name=data[0][1], email=data[0][2], university=data_univ[0],
             department=data[0][4], year=data[0][5], img="images/dp/" + data[0][7],
-            logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
+            logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED), footer=Markup(FOOTER))
         else:
             return redirect(core_str + "/")
 
@@ -211,7 +212,8 @@ def about():
 def add_model():
 
     if request.method == "GET":
-        return render_template("add-model.html", logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
+        return render_template("add-model.html", logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED),
+                                footer=Markup(FOOTER))
 
     if request.method == "POST":
 
@@ -260,7 +262,7 @@ def model():
 
         return render_template("model.html", name=data[0][3], des=data[0][4], dataset=dataset_link,
         code="code/" + data[0][6], model="model/" + data[0][7],
-        logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
+        logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED), footer=Markup(FOOTER))
 
 @app.route(core_str + "/contribution", methods=['GET'])
 def contribution():
@@ -270,7 +272,8 @@ def contribution():
         cursor.execute("SELECT id, name, approved FROM model WHERE uid=%d" % (session['user_id']))
         data = cursor.fetchall()
 
-        return render_template("contribution.html", data=data, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
+        return render_template("contribution.html", data=data, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED),
+                                footer=Markup(FOOTER))
 
 @app.route(core_str + "/model-search", methods=['GET'])
 def model_search():
@@ -280,7 +283,8 @@ def model_search():
         cursor.execute("SELECT id, uid, uname, name FROM model WHERE approved=1 ORDER BY puttime")
         data = cursor.fetchall()
 
-        return render_template("model-search.html", data=data, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED))
+        return render_template("model-search.html", data=data, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED),
+                                footer=Markup(FOOTER))
 
 @app.route(core_str + "/admin", methods=['GET'])
 def admin():
@@ -305,7 +309,8 @@ def admin():
         not_approved_count = total_count - approved_count
 
         return render_template("admin.html", user_count=user_count, total_count=total_count, approved_count=approved_count,
-        not_approved_count=not_approved_count, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN))
+        not_approved_count=not_approved_count, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN),
+        footer=Markup(FOOTER))
 
 @app.route(core_str + "/requests", methods=['GET'])
 def requests():
@@ -315,7 +320,8 @@ def requests():
         cursor.execute("SELECT id, uid, uname, name FROM model WHERE approved=0 ORDER BY puttime")
         data = cursor.fetchall()
 
-        return render_template("requests.html", data=data, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN))
+        return render_template("requests.html", data=data, logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN),
+                                footer=Markup(FOOTER))
 
 @app.route(core_str + "/approve", methods=['GET', 'POST'])
 def approve():
@@ -333,7 +339,7 @@ def approve():
 
         return render_template("approve.html", name=data[0][3], des=data[0][4], dataset=dataset_link,
         code="code/" + data[0][6], model="model/" + data[0][7],
-        logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN))
+        logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN), footer=Markup(FOOTER))
 
     if request.method == "POST":
 
@@ -349,7 +355,8 @@ def approve():
 def add_univ():
 
     if request.method == "GET":
-        return render_template("add-details.html", logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN))
+        return render_template("add-details.html", logout=Markup(NAVLOGREG), navbar=Markup(NAVBARADMIN),
+                                footer=Markup(FOOTER))
 
     if request.method == "POST":
 
@@ -388,7 +395,7 @@ def verify():
 def reset():
 
     if request.method == "GET":
-        return render_template("reset.html", navbar=Markup(NAVBAR))
+        return render_template("reset.html", navbar=Markup(NAVBAR), footer=Markup(FOOTER))
 
     if request.method == "POST":
 
@@ -421,7 +428,7 @@ Team SRM Brain
 def reset_pass():
 
     if request.method == "GET":
-        return render_template("reset-pass.html")
+        return render_template("reset-pass.html", navbar=Markup(NAVBAR), footer=Markup(FOOTER))
 
     if request.method == "POST":
 

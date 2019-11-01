@@ -39,3 +39,11 @@ NAVLOGREG = """<nav aria-label="breadcrumb">
 <li class="breadcrumb-item"><a href="/srmbrain/logout">Logout</a></li>
 </ol>
 </nav>"""
+
+FOOTER = """<div class="col-auto" style="float: right;">
+<div class="footer-logo" style="color: white;">
+<h6 class="text-white iq-font-18"><strong>Email: </strong>
+<a href="mailto:labsskynet@gmail.com" style="color: white;">labsskynet@gmail.com</a>
+</h6>
+</div>
+</div>"""
