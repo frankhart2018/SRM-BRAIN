@@ -22,6 +22,13 @@ $(document).ready(function() {
         window.swal({title: "Error!", text: errorString, icon: "error"});
       } else {
 
+        window.swal({
+          title: "Checking...",
+          text: "Please wait, processing!",
+          showConfirmButton: false,
+          allowOutsideClick: false
+        });
+
         var core_str = "/srmbrain";
 
         $.ajax({
@@ -30,6 +37,7 @@ $(document).ready(function() {
           dataType: "json",
           data: {"email": email},
           success: function(result) {
+            window.swal.close();
             window.swal({title: result.title, text: result.message, icon: result.status}).then(function() {
               window.location = result.href;
             });
