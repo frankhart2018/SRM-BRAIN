@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify, Response, Markup, session
+from flask import Flask, render_template, request, redirect, jsonify, Response, Markup, session, flash
 from flask_mail import Mail, Message
 import hashlib
 from werkzeug.utils import secure_filename
@@ -140,6 +140,10 @@ def dp():
     if request.method == "POST":
         if "login-button" in request.form:
             if "img-input" in request.files:
+
+                if request.files['img-input'].filename == '':
+                    return render_template("dp.html", logout=Markup(NAVLOGREG), nodp=True)
+
                 file = request.files['img-input']
                 file_name = secure_filename(file.filename)
                 file_ext = file_name.split(".")[1]
@@ -384,7 +388,7 @@ def verify():
 def reset():
 
     if request.method == "GET":
-        return render_template("reset.html")
+        return render_template("reset.html", navbar=Markup(NAVBAR))
 
     if request.method == "POST":
 
