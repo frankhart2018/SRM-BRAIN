@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+
+<!-- Mirrored from iqonicthemes.com/themes/vizion/digital-marketing/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Sep 2019 10:15:32 GMT -->
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>About Us - SRM Brain</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/magnific-popup.css') }}" />
+    <!-- Typography CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/typography.css') }}">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+  </head>
+  <body>
+    <!-- loading -->
+    <div id="loading">
+      <div id="loading-center">
+        <img src="{{ url_for('static', filename='images/loader.gif') }}" alt="loder">
+      </div>
+    </div>
+    <!-- loading End -->
+    <!-- Header-->
+    <header>
+      <div >
+        <div class="container-fluid sub-header">
+          <div class="row">
+            <div class="col-auto mr-auto">
+              <div class="btn-group">
+              </div>
+            </div>
+            <div class="col-auto sub-main">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/srmbrain/login">Login</a></li>
+                <li class="breadcrumb-item" aria-current="page"><a href="/srmbrain/register">Register</a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid main-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/srmbrain">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid logo" alt="img" style="width: 40%; height: 30%;">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid logo-white" alt="img" style="width: 30%; height: 20%;">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              {{ navbar }}
+            </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Header-->
+    <!--=================================
+    MAIN CONTENT -->
+    <div class="main-content">
+      <!--================================
+      Login -->
+
+      <section class="iq-login-regi">
+        <div class="container">
+          <h3><strong>WHAT IS SRM BRAIN?</strong></h3>
+          <p style="text-align: justify;"><br>
+            The most trending thing in today’s technological world is artificial intelligence.
+            Now most of us know what it is but how many of us actually practice it.
+            The common notion about artificial intelligence among the learners is that it is all theory but no practical,
+            which is to some extent correct also as they don’t have even access to the high end systems which are
+            required to build those AI models so here is the place where SRM BRAIN steps in we will build the
+            models on our system and you just have to use it in your code. Now this is not just useful for them who
+            have the knowledge of AI. For people who do not have knowledge about AI but want to use it in their
+            mobile or web application, we have created production ready APIs for all of the available pre-trained models.
+            Be it a hackathon or making a project, SRM Brain holds your back with the heavy load of model training.
+            So, AI is now just an API call away.<br><br>
+          </p>
+          <h3><strong>THE TEAM</strong></h3>
+          <div class="row">
+            {% for person in team %}
+              <div class="col-sm-12 col-lg-3 col-md-6">
+                <div class="iq-team  wow slideInUp" data-wow-duration="0.5s">
+                  <div class="iq-team-img">
+                    <img src="images/team/{{person[-2]}}" width="200" style="height: 300px;" class="img-fluid center-block" alt="#">
+                  </div>
+                  <div class="iq-team-info text-center">
+                    <h5>{{person[1]}}</h5>
+                    <span class="team-post iq-tw-5">{{person[2]}}</span>
+                  </div>
+                  <div class="share">
+                    <ul>
+                      <li><a href="{{person[3]}}"><i class="fab fa-linkedin"></i></a></li>
+                      <li><a href="{{person[4]}}"><i class="fab fa-github"></i></a></li>
+                      <li><a href="mailto:{{person[5]}}"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+
+      <!--================================
+      Login -->
+    </div>
+    <!--=================================
+    MAIN CONTENT  END-->
+    <!-- Footer start-->
+    <footer id="contact" class="main-bg pt-5 pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-auto mr-auto">
+            <div class="footer-logo">
+              <a href="/srmbrain"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="img" style="width: 30%; height: 20%;"></a>
+            </div>
+          </div>
+          {{footer}}
+        </div>
+        <hr class="pt-5">
+        <div class="pt-3">
+          <div class="row justify-content-between">
+            <div class="col-auto mr-auto">
+              <h6 class="text-white iq-font-18"><span>Made with &hearts; for AI enthusiasts</span></h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- back-to-top -->
+      <div id="back-to-top">
+        <a class="top" id="top" href="#top"><span>Scroll Up</span> <i class="ion-ios-arrow-thin-up"></i></a>
+      </div>
+      <!-- back-to-top End -->
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first -->
+    <script data-cfasync="false" src="https://iqonicthemes.com/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    <!-- popper -->
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <!-- bootstrap -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- Owl Carousel -->
+    <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+    <!-- main -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!--custom -->
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <!--hit api -->
+    <script src="{{ url_for('static', filename='js/add-model-api.js') }}"></script>
+  </body>
+
+<!-- Mirrored from iqonicthemes.com/themes/vizion/digital-marketing/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 Sep 2019 10:15:32 GMT -->
+</html>

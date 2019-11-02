@@ -38,6 +38,15 @@ def index():
                 return redirect(core_str + "/admin")
         return render_template("index.html", navbar=Markup(NAVBAR), footer=Markup(FOOTER))
 
+@app.route(core_str + "/about-us", methods=['GET'])
+def about_us():
+
+    if request.method == "GET":
+        cursor.execute("SELECT * FROM team ORDER BY priority")
+        data = cursor.fetchall()
+
+        return render_template("about-us.html", navbar=Markup(NAVBAR), footer=Markup(FOOTER), team=data)
+
 @app.route(core_str + "/login", methods=['GET', 'POST'])
 def login():
 

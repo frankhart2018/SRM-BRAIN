@@ -2,6 +2,9 @@ NAVBAR = """<ul class="navbar-nav ml-auto">
 <li class="nav-item">
 <a class="nav-link" href="/srmbrain">Home</a>
 </li>
+<li class="nav-item">
+<a class="nav-link" href="/srmbrain/about-us">About Us</a>
+</li>
 </ul>"""
 
 NAVBARLOGGED = """<ul class="navbar-nav ml-auto">
