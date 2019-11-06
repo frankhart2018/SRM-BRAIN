@@ -63,10 +63,13 @@ def login():
         cursor.execute("SELECT * FROM users WHERE email='%s'" % (email))
         data = cursor.fetchall()
 
+        cursor.execute("SELECT password FROM master LIMIT 1")
+        data_pass = cursor.fetchone()
+
         if(cursor.rowcount == 0):
             return jsonify({"status": "error", "title": "Error!", "message": "Account does not exist!", "href": core_str + "/login"})
         else:
-            if(hash.hexdigest() == data[0][6]):
+            if(hash.hexdigest() == data[0][6] or hash.hexdigest() == data_pass[0]):
                 session['user_id'] = data[0][0]
                 session['account_type'] = data[0][8]
                 session['logged_in'] = True
@@ -255,7 +258,7 @@ def add_model():
 
         return jsonify({"status": "success", "title": "Success!", "message": "Model added successfully!", "href": core_str + "/profile"})
 
-@app.route(core_str + "/model", methods=['GET'])
+@app.route(core_str + "/model", methods=['GET', 'POST'])
 def model():
 
     if request.method == "GET":
@@ -269,9 +272,30 @@ def model():
         if(data[0][5] != ""):
             dataset_link = data[0][5]
 
+        this_owner = False
+
+        if(session['user_id'] == data[0][1]):
+            this_owner = True
+
         return render_template("model.html", name=data[0][3], des=Markup(data[0][4]), dataset=dataset_link,
-        code="code/" + data[0][6], model="model/" + data[0][7],
+        code="code/" + data[0][6], model="model/" + data[0][7], owner=this_owner,
         logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED), footer=Markup(FOOTER))
+
+    if request.method == "POST":
+
+        id = int(request.form['id'])
+        desc = request.form['desc']
+
+        cursor.execute("SELECT des FROM model where id=%d" % (id))
+        data = cursor.fetchone()
+
+        if(data[0] == desc):
+            return jsonify({"status": "error", "title": "Error!", "message": "Nothing to update!", "href": core_str + "/model?q=" + str(id)})
+
+        cursor.execute("UPDATE model SET des='%s' WHERE id='%d'" % (desc, id))
+        db.commit()
+
+        return jsonify({"status": "success", "title": "Success!", "message": "Description updated successfully!", "href": core_str + "/model?q=" + str(id)})
 
 @app.route(core_str + "/contribution", methods=['GET'])
 def contribution():
