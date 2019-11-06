@@ -14,7 +14,7 @@ $(document).ready(function() {
     var password = $("#password-input").val();
     var cpassword = $("#cpassword-input").val();
 
-    if(name != "" && email != "" && university != "" && department != "0" && year != "0" && password != "" && cpassword != "") {
+    if(name != "" && email != "" && university != "" && department != "NULL" && year != "0" && password != "" && cpassword != "") {
 
       var error = 0;
       var errorString = "";

@@ -269,7 +269,7 @@ def model():
         if(data[0][5] != ""):
             dataset_link = data[0][5]
 
-        return render_template("model.html", name=data[0][3], des=data[0][4], dataset=dataset_link,
+        return render_template("model.html", name=data[0][3], des=Markup(data[0][4]), dataset=dataset_link,
         code="code/" + data[0][6], model="model/" + data[0][7],
         logout=Markup(NAVLOGREG), navbar=Markup(NAVBARLOGGED), footer=Markup(FOOTER))
 
