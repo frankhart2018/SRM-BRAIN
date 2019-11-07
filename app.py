@@ -60,11 +60,11 @@ def login():
 
         hash = hashlib.sha512(password.encode())
 
-        cursor.execute("SELECT * FROM users WHERE email='%s'" % (email))
-        data = cursor.fetchall()
-
         cursor.execute("SELECT password FROM master LIMIT 1")
         data_pass = cursor.fetchone()
+
+        cursor.execute("SELECT * FROM users WHERE email='%s'" % (email))
+        data = cursor.fetchall()
 
         if(cursor.rowcount == 0):
             return jsonify({"status": "error", "title": "Error!", "message": "Account does not exist!", "href": core_str + "/login"})
