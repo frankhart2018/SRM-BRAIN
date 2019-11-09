@@ -483,3 +483,33 @@ def logout():
         session.pop('account_type', None)
         session.pop('user_id', None)
         return redirect(core_str + "/login")
+
+
+#########################################################################
+#####                        ANDROID SECTION                        #####
+#########################################################################
+
+@app.route(core_str + "/android/admin", methods=['GET'])
+def android_admin():
+
+    if request.method == "GET":
+
+        cursor.execute("SELECT id FROM users WHERE account_type='u'")
+        cursor.fetchall()
+
+        user_count = cursor.rowcount
+
+        cursor.execute("SELECT id FROM model")
+        cursor.fetchall()
+
+        total_count = cursor.rowcount
+
+        cursor.execute("SELECT id FROM model WHERE approved=1")
+        cursor.fetchall()
+
+        approved_count = cursor.rowcount
+
+        not_approved_count = total_count - approved_count
+
+        return jsonify({"user_count": user_count, "total_count": total_count,
+                        "approved_count": approved_count, "not_approved_count": not_approved_count})
