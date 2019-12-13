@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Quiz</title>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+  </head>
+  <body>
+      <script type="text/javascript">var names = [];</script>
+      {% for d in data_dict.keys() %}
+        <p style="font-size: 120%;"><strong><u>{{d}}</u>:</strong></p>
+        {% for question in data_dict[d] %}
+          {% set d = d.replace(" ", "") %}
+          {% set var = "ans" + d + loop.index|string %}
+          <p><strong>{{question}}</strong></p>
+          <p>
+            <input type="radio" name="ans{{d}}{{loop.index}}" value="1"
+            {% if data_dict_1[var] == "1" %} checked {% endif %}>&nbsp;Strongly Agree
+            <input type="radio" name="ans{{d}}{{loop.index}}" value="2"
+            {% if data_dict_1[var] == "2" %} checked {% endif %}>&nbsp;Moderately Agree
+            <input type="radio" name="ans{{d}}{{loop.index}}" value="3"
+            {% if data_dict_1[var] == "3" %} checked {% endif %}>&nbsp;Slightly Agree
+            <input type="radio" name="ans{{d}}{{loop.index}}" value="4"
+            {% if data_dict_1[var] == "4" %} checked {% endif %}>&nbsp;Moderately Disagree
+            <input type="radio" name="ans{{d}}{{loop.index}}" value="5"
+            {% if data_dict_1[var] == "5" %} checked {% endif %}>&nbsp;Strongly Disagree
+          </p>
+          <script type="text/javascript">
+            names.push("ans{{d}}{{loop.index}}");
+          </script>
+        {% endfor %}
+      {% endfor %}
+      <p><input type="button" id="submit" value="Submit"></p>
+
+      <script type="text/javascript">
+
+
+
+        $("#submit").click(function() {
+          var count = 0;
+          var temp;
+          var answers = [];
+          names.forEach(function(item, index) {
+            if($("input[name='" + item + "']").is(":checked"))
+              answers.push(item + "--" + $("input[name='" + item + "']:checked").val());
+            else
+              answers.push(item + "--0");
+          });
+
+          $.ajax({
+            url: "/srmbrain/questionnaire/quiz",
+            type: "post",
+            dataType: "json",
+            data: {"answers": answers},
+            success: function(result) {
+              if(result.status == "Complete") {
+                alert("Thanks for successfully completing!");
+                location.href = "/srmbrain/questionnaire";
+              }
+              alert(result.status + ". Completed: " + result.count + "/109");
+            }
+          });
+        });
+
+      </script>
+  </body>
+</html>

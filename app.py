@@ -513,3 +513,113 @@ def android_admin():
 
         return jsonify({"user_count": user_count, "total_count": total_count,
                         "approved_count": approved_count, "not_approved_count": not_approved_count})
+
+#########################################################################
+#####                      QUESTIONNAIRE SECTION                    #####
+#########################################################################
+
+@app.route(core_str + "/questionnaire/add", methods=['GET'])
+def add():
+
+    return render_template("temp/add.html")
+
+@app.route(core_str + "questionnaire/put", methods=['POST'])
+def put():
+
+    question = request.form['question'].replace("'", r"\'")
+    type = request.form['type']
+    ask_friend = int(request.form['ask_friend'])
+
+    cursor.execute("INSERT INTO questions(question, type, ask_friend) VALUES('%s', '%s', '%d')" % (question, type, ask_friend))
+    db.commit()
+
+    return jsonify({"status": "Question successfully put into db!"})
+
+@app.route(core_str + "/questionnaire", methods=['GET', 'POST'])
+def index_temp():
+
+    if request.method == "GET":
+        session.clear()
+        return render_template("temp/index.html")
+
+    if request.method == "POST":
+
+        name = request.form['name']
+        email = request.form['email']
+        university = request.form['university']
+
+        cursor.execute("SELECT file FROM users_temp WHERE email='%s'" % (email))
+        data = cursor.fetchall()
+
+        if(cursor.rowcount > 0):
+            session['user_file'] = data[0][0]
+            session['logged'] = True
+            return jsonify({"status": "User already exists!"})
+
+        session['user_file'] = name.lower().replace(" ", "") + email.replace(".", "") + ".txt"
+
+        cursor.execute("INSERT INTO users_temp(name, email, university, file) VALUES('%s', '%s', '%s', '%s')" %
+                        (name, email, university, name.lower().replace(" ", "") + email.replace(".", "") + ".txt"))
+        db.commit()
+
+        return jsonify({"status": "User added put into db!"})
+
+@app.route(core_str + "/questionnaire/quiz", methods=['GET', 'POST'])
+def quiz():
+
+    if request.method == "GET":
+        cursor.execute("SELECT * FROM questions")
+        data = cursor.fetchall()
+
+        data_dict = {}
+
+        lines =[]
+
+        print(data)
+
+        if session.get('logged') == True:
+            file = open("files/" + session.get('user_file'), "r")
+            doc = file.read()
+            file.close()
+
+            lines = doc.split("\n")
+
+        for d in data:
+            if d[2] in data_dict.keys():
+                data_dict[d[2]].append(d[1])
+            else:
+                data_dict[d[2]] = [d[1]]
+
+        data_dict_1 = {}
+
+        for i in range(len(lines) - 1):
+            data_dict_1[lines[i].split("--")[0]] = lines[i].split("--")[1]
+
+        print(data_dict_1)
+
+        return render_template("temp/quiz.html", data_dict=data_dict, data_dict_1=data_dict_1)
+
+    if request.method == "POST":
+
+        answers = request.form.getlist('answers[]')
+
+        count = 0
+
+        with open("files/" + session.get('user_file'), "w") as file:
+            for answer in answers:
+                file.write(answer + "\n")
+                if(int(answer.split("--")[1]) != 0):
+                    count += 1
+
+        if count == 109:
+            return jsonify({"status": "Complete"})
+
+        return jsonify({"status": "Success", "count": str(count)})
+
+@app.route(core_str + "/questionnaire/check", methods=['GET'])
+def check():
+
+    if request.method == "GET":
+
+
+        return jsonify({"completed": len(os.listdir("files/"))})

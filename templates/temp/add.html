@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Add Questions</title>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <p><textarea id="question" placeholder="Enter the question" style="width: 400px; height: 80px;" autofocus></textarea></p>
+    <p><input type="text" id="type" placeholder="Enter type"></p>
+    <p><input type="checkbox" id="ask_friend">Ask friend</p>
+    <p><input type="button" id="submit" value="Submit"></p>
+
+    <script type="text/javascript">
+
+        $("#submit").click(function() {
+          var question = $("#question").val();
+          var type = $("#type").val();
+          var ask_friend = $("#ask_friend").is(":checked");
+          ask_friend = ask_friend ? 1 : 0;
+
+          if(question != "" && type != "") {
+
+            $.ajax({
+              url: "/srmbrain/questionnaire/put",
+              type: "post",
+              dataType: "json",
+              data: {"question": question, "type": type, "ask_friend": ask_friend},
+              success: function(result) {
+                  alert(result.status);
+                  $("#question").val("");
+                  $("#type").val("");
+                  $("#ask_friend").prop("checked", false);
+                  $("#question").focus();
+              }
+            });
+
+          } else {
+            alert("Complete the form!");
+          }
+        });
+
+    </script>
+  </body>
+</html>
