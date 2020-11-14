@@ -7,7 +7,8 @@ import os
 from connect import cursor, db
 from constants import *
 
-app = Flask(__name__, static_folder=os.path.abspath('/opt/srmbrain/'))
+# app = Flask(__name__, static_folder=os.path.abspath('/opt/srmbrain/'))
+app = Flask(__name__)
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.secret_key = 'my-secret-key'
@@ -140,7 +141,7 @@ It's great to have you as a part of this growing community. We are eager for you
 Thanks
 Team SRM Brain
         """ % (email)
-        mail.send(msg)
+        # mail.send(msg)
 
         return jsonify({"status": "success", "title": "Success!", "message": "Registerted successfully!", "href": core_str + "/login"})
 
